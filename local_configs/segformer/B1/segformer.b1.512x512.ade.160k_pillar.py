@@ -46,4 +46,4 @@ lr_config = dict(_delete_=True, policy='poly',
 
 
 data = dict(samples_per_gpu=2)
-evaluation = dict(interval=16, metric='mIoU')
+evaluation = dict(interval=16000, metric='mIoU')
