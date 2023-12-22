@@ -10,7 +10,7 @@ pillar_colors = [[255, 105, 180], [255, 0, 0], [255, 140, 0], [255, 255, 0],
                  [0, 128, 0], [0, 0, 255], [75, 0, 130], [128, 0, 128]]
 
 # Root directory of dataset
-datasetRootDir = 'data/pillar'
+datasetRootDir = 'data/pillar_raw'
 
 # Create dataset with given images
 def CreateDataset(datasetName, datasetList):
@@ -22,16 +22,16 @@ def CreateDataset(datasetName, datasetList):
 
         # Read current label image
         labelImage = cv2.imread(f'{datasetRootDir}/{imageName}')
-        resultImage = np.zeros((360, 640, 3), dtype=np.uint8)
+        resultImage = np.zeros((360, 640, 1), dtype=np.uint8)
 
         for i in range(len(pillar_colors)):
             color = np.array(pillar_colors[i][::-1])
 
-            newColor = np.array([0, 0, 0])
+            newColor = np.array([0])
             if i == 0 or i == 1:
-                newColor = np.array([1, 1, 1]) * 127
+                newColor = np.array([1])
             else:
-                newColor = np.array([2, 2, 2]) * 127
+                newColor = np.array([2])
 
             resultImage[cv2.inRange(labelImage, color, color) > 0] = newColor
 
