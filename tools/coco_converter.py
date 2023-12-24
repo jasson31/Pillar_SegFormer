@@ -22,16 +22,16 @@ def CreateDataset(datasetName, datasetList):
 
         # Read current label image
         labelImage = cv2.imread(f'{datasetRootDir}/{imageName}')
-        resultImage = np.ones((360, 640, 1), dtype=np.uint8)
+        resultImage = np.zeros((360, 640, 1), dtype=np.uint8)
 
         for i in range(len(pillar_colors)):
             color = np.array(pillar_colors[i][::-1])
 
-            newColor = np.array([1])
+            newColor = np.array([0])
             if i == 0 or i == 1:
-                newColor = np.array([2])
+                newColor = np.array([1])
             else:
-                newColor = np.array([3])
+                newColor = np.array([2])
 
             resultImage[cv2.inRange(labelImage, color, color) > 0] = newColor
 
@@ -54,8 +54,8 @@ if __name__ == "__main__":
     random.shuffle(totalImageList)
 
     # Use 3/4 of dataset as training set, 1/4 as validation set
-    trainSet = totalImageList[:int(len(totalImageList) * 0.9)]
-    validSet = totalImageList[int(len(totalImageList) * 0.9):]
+    trainSet = totalImageList[:int(len(totalImageList) * 0.95)]
+    validSet = totalImageList[int(len(totalImageList) * 0.95):]
 
     print(f'Total number : {len(totalImageList)}')
     print(f'Train set : {len(trainSet)}')
