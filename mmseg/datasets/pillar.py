@@ -5,9 +5,9 @@ from .custom import CustomDataset
 @DATASETS.register_module()
 class PillarDataset(CustomDataset):
 
-    CLASSES = ('big', 'small')
+    CLASSES = ('background', 'big', 'small')
 
-    PALETTE = [[0, 255, 0], [255, 0, 0]]
+    PALETTE = [[0, 0, 0], [0, 255, 0], [255, 0, 0]]
 
     def __init__(self, **kwargs):
         super(PillarDataset, self).__init__(
