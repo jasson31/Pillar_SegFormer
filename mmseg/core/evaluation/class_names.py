@@ -52,9 +52,7 @@ def voc_classes():
 
 
 def custom_classes():
-    return [
-        'big', 'small'
-    ]
+    return ['big', 'small']
 
 
 def cityscapes_palette():
