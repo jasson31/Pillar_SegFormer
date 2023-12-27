@@ -6,6 +6,8 @@ from mmseg.core.evaluation import get_palette
 import cv2 as cv
 import glob
 import os
+import numpy as np
+import re
 
 
 def main():
@@ -28,6 +30,8 @@ def main():
         os.makedirs(f'{args.img}/../segformer')
 
     img_list = glob.glob(f'{args.img}/*.jpg', recursive=True)
+    img_list = np.unique(np.array(img_list))
+    img_list = sorted(img_list, key=lambda s: int(re.search(r'\d+', s).group()))
 
     for index, img in enumerate(img_list):
         print(f'{index} / {len(img_list)}')
@@ -36,6 +40,11 @@ def main():
         result = inference_segmentor(model, img)
 
         result_img = result[0].permute(1, 2, 0).cpu().numpy() * 255
+
+        result_img[:, :, 2] += result_img[:, :, 0]
+        result_img[:, :, 1] += result_img[:, :, 0]
+
+        result_img = np.clip(result_img, 0, 255)
 
         # show the results
         #result_img = return_result(model, img, result, get_palette(args.palette))
